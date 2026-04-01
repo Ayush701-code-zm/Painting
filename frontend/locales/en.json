@@ -1,0 +1,31 @@
+{
+  "common": {
+    "welcome": "Welcome",
+    "learnMore": "Learn More",
+    "contactUs": "Contact Us",
+    "submitForm": "Submit",
+    "tryAgain": "Try again",
+    "returnHome": "Return Home",
+    "loading": "Loading..."
+  },
+  "home": {
+    "title": "Welcome to Glamsfyt",
+    "description": "Innovative solutions for a modern world."
+  },
+  "forms": {
+    "name": "Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "message": "Message",
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "success": "Submitted successfully!",
+    "error": "Something went wrong. Please try again."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "solutions": "Solutions",
+    "contact": "Contact"
+  }
+}
