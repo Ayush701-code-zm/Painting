@@ -1,8 +1,4 @@
 {
-  "services": {
-    "frontend": {
-      "root": "frontend",
-      "framework": "nextjs"
-    }
-  }
+  "rootDirectory": "frontend",
+  "framework": "nextjs"
 }
