@@ -5,24 +5,31 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import Header from "@/app/components/header";
 import "./globals.css";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://glamsfyt.com";
+const SITE_DESCRIPTION =
+  "Original hand-painted artworks by Shivi Upadhyay. Browse anime, devotional, and contemporary pieces — or commission something made just for you.";
+
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_API_URL ?? "https://glamsfyt.com"
-  ),
+  metadataBase: new URL(SITE_URL),
   title: {
     template: "%s | Glamsfyt",
-    default: "Glamsfyt",
+    default: "Glamsfyt — Original Hand-Painted Art",
   },
-  description: "Glamsfyt — innovative solutions for a modern world.",
+  description: SITE_DESCRIPTION,
   openGraph: {
-    title: "Glamsfyt",
-    description: "Glamsfyt — innovative solutions for a modern world.",
-    images: ["/og-image.png"],
+    title: "Glamsfyt — Original Hand-Painted Art",
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+    siteName: "Glamsfyt",
+    locale: "en_IN",
+    type: "website",
+    images: [{ url: "/images/hero-background.png", width: 1600, height: 900 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Glamsfyt",
-    description: "Glamsfyt — innovative solutions for a modern world.",
+    title: "Glamsfyt — Original Hand-Painted Art",
+    description: SITE_DESCRIPTION,
+    images: ["/images/hero-background.png"],
   },
 };
 

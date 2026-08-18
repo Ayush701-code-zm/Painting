@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useId, useState, useCallback } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { FiSearch, FiUser, FiShoppingBag, FiMenu, FiX } from "react-icons/fi";
+import { FiSearch, FiMenu, FiX } from "react-icons/fi";
 import { useScrollPosition } from "@/hooks";
 
 const NAV_LINKS = [
@@ -11,6 +11,7 @@ const NAV_LINKS = [
   { label: "Collections", href: "/collections" },
   { label: "About", href: "/about" },
   { label: "Commission", href: "/commission" },
+  { label: "Contact", href: "/contact" },
 ] as const;
 
 export default function Header() {
@@ -100,22 +101,6 @@ export default function Header() {
             className="font-['Inter'] text-sm font-semibold text-[#1c1b18] bg-[#fcc010] px-[1.25rem] py-[0.5rem] rounded-2xl hover:bg-[#e8ae00] transition-colors duration-200 whitespace-nowrap"
           >
             Shop Now
-          </Link>
-
-          <Link
-            href="/profile"
-            aria-label="Profile"
-            className="text-[rgba(28,27,24,0.55)] hover:text-[#1c1b18] transition-colors duration-200"
-          >
-            <FiUser size={21} />
-          </Link>
-
-          <Link
-            href="/cart"
-            aria-label="Cart"
-            className="text-[rgba(28,27,24,0.55)] hover:text-[#1c1b18] transition-colors duration-200"
-          >
-            <FiShoppingBag size={21} />
           </Link>
         </nav>
 

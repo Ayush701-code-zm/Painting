@@ -3,9 +3,12 @@ import Link from "next/link";
 import { ARTWORKS } from "@/data/artworks";
 import FadeInSection from "@/app/components/fade-in-section";
 import Footer from "@/app/components/footer";
+import ArtworkImage from "@/app/components/artwork-image";
 
 export const metadata: Metadata = {
   title: "Search",
+  description:
+    "Search the Glamsfyt collection by title, style, character, or series.",
 };
 
 export default async function SearchPage({
@@ -21,13 +24,16 @@ export default async function SearchPage({
         (a) =>
           a.title.toLowerCase().includes(query) ||
           a.style.toLowerCase().includes(query) ||
-          a.medium.toLowerCase().includes(query)
+          a.medium.toLowerCase().includes(query) ||
+          a.series?.toLowerCase().includes(query) ||
+          a.character?.toLowerCase().includes(query) ||
+          a.keywords?.some((k) => k.toLowerCase().includes(query))
       )
     : [];
 
   return (
     <>
-      <main className="min-h-screen bg-[#fefcf8] pt-[6rem]">
+      <main className="min-h-screen bg-[#fefcf8] pt-[4.25rem]">
         <div className="max-w-[72rem] mx-auto px-[1.5rem] md:px-[4rem] py-[2.5rem]">
           <FadeInSection>
             <h1 className="font-['Inter'] font-bold text-[2rem] md:text-[2.5rem] tracking-[-0.05em] text-[#1c1b18] mb-[0.5rem]">
@@ -49,7 +55,6 @@ export default async function SearchPage({
             )}
           </FadeInSection>
 
-          {/* Results */}
           {!query && (
             <div className="flex flex-col items-center py-[4rem] text-center">
               <p className="font-['Instrument_Serif'] italic text-[1.375rem] text-[rgba(28,27,24,0.4)]">
@@ -81,9 +86,8 @@ export default async function SearchPage({
                     href={`/shop/${artwork.id}`}
                     className="group flex flex-col bg-white rounded-[1.25rem] overflow-hidden shadow-[0px_2px_16px_0px_rgba(28,27,24,0.06)] hover:shadow-[0px_12px_32px_0px_rgba(28,27,24,0.13)] hover:-translate-y-1 transition duration-300"
                   >
-                    <div className="relative aspect-[3/4]">
-                      <div className="absolute inset-0" style={{ background: artwork.bg }} />
-                      <div className="absolute inset-0" style={{ background: artwork.shine }} />
+                    <div className="relative aspect-square overflow-hidden bg-[#f0ead8]">
+                      <ArtworkImage artwork={artwork} />
                     </div>
                     <div className="p-[1rem] md:p-[1.25rem]">
                       <span className="font-['Inter'] text-[0.6875rem] font-medium tracking-[0.08em] uppercase text-[rgba(28,27,24,0.45)]">
@@ -93,7 +97,9 @@ export default async function SearchPage({
                         {artwork.title}
                       </h2>
                       <div className="flex items-center justify-between mt-[0.75rem]">
-                        <span className="font-['Inter'] text-xs text-[rgba(28,27,24,0.45)]">{artwork.size}</span>
+                        <span className="font-['Inter'] text-xs text-[rgba(28,27,24,0.45)]">
+                          {artwork.size}
+                        </span>
                         <span className="font-['Inter'] text-sm font-semibold text-[#1c1b18]">
                           {artwork.available ? artwork.price : "Sold"}
                         </span>

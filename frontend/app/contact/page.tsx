@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { FiInstagram, FiMail } from "react-icons/fi";
-import { FaPinterestP } from "react-icons/fa";
+import { Suspense } from "react";
+import { FiMail } from "react-icons/fi";
 import FadeInSection from "@/app/components/fade-in-section";
 import Footer from "@/app/components/footer";
 import ContactForm from "./components/contact-form";
@@ -41,26 +41,6 @@ export default function ContactPage() {
                   <FiMail size={17} className="shrink-0" />
                   hello@glamsfyt.com
                 </a>
-                <div className="flex items-center gap-[1rem] mt-[0.5rem]">
-                  <Link
-                    href="https://instagram.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Instagram"
-                    className="text-[rgba(28,27,24,0.45)] hover:text-[#1c1b18] transition-colors duration-200"
-                  >
-                    <FiInstagram size={19} />
-                  </Link>
-                  <Link
-                    href="https://pinterest.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Pinterest"
-                    className="text-[rgba(28,27,24,0.45)] hover:text-[#1c1b18] transition-colors duration-200"
-                  >
-                    <FaPinterestP size={19} />
-                  </Link>
-                </div>
               </div>
 
               <div className="mt-[2.5rem] pt-[2rem] border-t border-[rgba(28,27,24,0.1)]">
@@ -80,7 +60,15 @@ export default function ContactPage() {
             {/* Right — form */}
             <div className="flex-1">
               <FadeInSection>
-                <ContactForm />
+                <Suspense
+                  fallback={
+                    <div className="font-['Inter'] text-sm text-[rgba(28,27,24,0.45)] py-[2rem]">
+                      Loading form…
+                    </div>
+                  }
+                >
+                  <ContactForm />
+                </Suspense>
               </FadeInSection>
             </div>
           </div>

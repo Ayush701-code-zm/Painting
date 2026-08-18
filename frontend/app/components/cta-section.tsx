@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FiHeart, FiGlobe, FiCheck } from "react-icons/fi";
+import { getArtworkById } from "@/data/artworks";
 import FadeInSection from "./fade-in-section";
 
 const TRUST_ITEMS = [
@@ -10,6 +12,16 @@ const TRUST_ITEMS = [
   { Icon: FiGlobe, label: "Ships worldwide" },
   { Icon: FiCheck, label: "Satisfaction guaranteed" },
 ] as const;
+
+const CTA_ARTWORK_IDS = [
+  "tropical-leaf-wall-painting",
+  "blue-floral-wall-art",
+  "shri-krishna-portrait",
+] as const;
+
+const CTA_ARTWORKS = CTA_ARTWORK_IDS.map((id) => getArtworkById(id)).filter(
+  (artwork) => artwork != null
+);
 
 const paintingOneVariants = {
   hidden: { opacity: 0, rotate: -8, y: 30 },
@@ -42,11 +54,12 @@ const paintingThreeVariants = {
 };
 
 export default function CtaSection() {
+  const [center, right, left] = CTA_ARTWORKS;
+
   return (
     <section className="bg-[#f7f3ed] py-[5rem] md:py-[7rem] px-[1.5rem] md:px-[4rem]">
       <div className="max-w-[72rem] mx-auto">
         <div className="flex flex-col md:flex-row items-center gap-[4rem] md:gap-[6rem]">
-          {/* Left — text content */}
           <div className="flex-1 flex flex-col items-start">
             <FadeInSection>
               <span className="font-['Inter'] text-xs font-medium tracking-[0.12em] uppercase text-[rgba(28,27,24,0.45)] mb-[1rem] block">
@@ -65,7 +78,6 @@ export default function CtaSection() {
               </p>
             </FadeInSection>
 
-            {/* Trust badges */}
             <FadeInSection>
               <ul className="flex flex-col gap-[0.875rem] mt-[2rem] mb-[2.25rem]">
                 {TRUST_ITEMS.map(({ Icon, label }) => (
@@ -81,7 +93,6 @@ export default function CtaSection() {
               </ul>
             </FadeInSection>
 
-            {/* CTA buttons */}
             <FadeInSection>
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-[0.875rem]">
                 <Link
@@ -91,7 +102,7 @@ export default function CtaSection() {
                   Request a Commission
                 </Link>
                 <Link
-                  href="/about"
+                  href="/about#process"
                   className="font-['Inter'] text-[0.9375rem] font-medium text-[rgba(28,27,24,0.65)] px-[2rem] py-[0.875rem] rounded-[3rem] border border-[rgba(28,27,24,0.18)] hover:border-[rgba(28,27,24,0.35)] hover:text-[#1c1b18] transition duration-200 whitespace-nowrap"
                 >
                   See My Process
@@ -100,42 +111,61 @@ export default function CtaSection() {
             </FadeInSection>
           </div>
 
-          {/* Right — gallery wall */}
           <div className="flex-1 flex items-center justify-center">
             <div className="relative w-full max-w-[24rem] h-[28rem]">
-              <motion.div
-                variants={paintingOneVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.4 }}
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[13rem] h-[17rem] rounded-[0.375rem] border-[0.5rem] border-[#f0ead8] shadow-[0px_20px_48px_0px_rgba(28,27,24,0.22)] overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-[linear-gradient(145deg,#c4512a_0%,#d4943a_35%,#8b4513_65%,#2c1810_100%)]" />
-                <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(255,255,255,0.08)_0%,transparent_55%)]" />
-                <div className="absolute bottom-[1rem] left-[1rem] right-[1rem] h-[1px] bg-[rgba(255,255,255,0.15)]" />
-              </motion.div>
+              {center && (
+                <motion.div
+                  variants={paintingOneVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.4 }}
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[13rem] h-[17rem] rounded-[0.375rem] border-[0.5rem] border-[#f0ead8] shadow-[0px_20px_48px_0px_rgba(28,27,24,0.22)] overflow-hidden bg-[#f0ead8]"
+                >
+                  <Image
+                    src={center.image}
+                    alt={center.imageAlt ?? center.title}
+                    fill
+                    sizes="13rem"
+                    className="object-cover"
+                  />
+                </motion.div>
+              )}
 
-              <motion.div
-                variants={paintingTwoVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.4 }}
-                className="absolute right-0 top-[1.5rem] w-[9.5rem] h-[12.5rem] rounded-[0.375rem] border-[0.5rem] border-[#f0ead8] shadow-[0px_14px_32px_0px_rgba(28,27,24,0.18)] overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-[linear-gradient(160deg,#6b8a6d_0%,#4a7a7a_45%,#2d5a3d_100%)]" />
-                <div className="absolute inset-0 bg-[linear-gradient(225deg,rgba(255,255,255,0.07)_0%,transparent_50%)]" />
-              </motion.div>
+              {right && (
+                <motion.div
+                  variants={paintingTwoVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.4 }}
+                  className="absolute right-0 top-[1.5rem] w-[9.5rem] h-[12.5rem] rounded-[0.375rem] border-[0.5rem] border-[#f0ead8] shadow-[0px_14px_32px_0px_rgba(28,27,24,0.18)] overflow-hidden bg-[#f0ead8]"
+                >
+                  <Image
+                    src={right.image}
+                    alt={right.imageAlt ?? right.title}
+                    fill
+                    sizes="9.5rem"
+                    className="object-cover"
+                  />
+                </motion.div>
+              )}
 
-              <motion.div
-                variants={paintingThreeVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.4 }}
-                className="absolute left-0 bottom-[2rem] w-[8.5rem] h-[10.5rem] rounded-[0.375rem] border-[0.5rem] border-[#f0ead8] shadow-[0px_10px_24px_0px_rgba(28,27,24,0.15)] overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-[linear-gradient(120deg,#b87a7a_0%,#d4a0a0_50%,#7a4040_100%)]" />
-                <div className="absolute inset-0 bg-[linear-gradient(300deg,rgba(255,255,255,0.06)_0%,transparent_50%)]" />
-              </motion.div>
+              {left && (
+                <motion.div
+                  variants={paintingThreeVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.4 }}
+                  className="absolute left-0 bottom-[2rem] w-[8.5rem] h-[10.5rem] rounded-[0.375rem] border-[0.5rem] border-[#f0ead8] shadow-[0px_10px_24px_0px_rgba(28,27,24,0.15)] overflow-hidden bg-[#f0ead8]"
+                >
+                  <Image
+                    src={left.image}
+                    alt={left.imageAlt ?? left.title}
+                    fill
+                    sizes="8.5rem"
+                    className="object-cover"
+                  />
+                </motion.div>
+              )}
 
               <div
                 aria-hidden="true"

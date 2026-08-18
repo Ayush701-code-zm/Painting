@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ARTWORKS, STYLES, getArtworksByStyle } from "@/data/artworks";
+import { STYLES, getArtworksByStyle } from "@/data/artworks";
 import FadeInSection from "@/app/components/fade-in-section";
 import Footer from "@/app/components/footer";
+import ArtworkImage from "@/app/components/artwork-image";
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -84,15 +85,8 @@ export default async function ShopPage({
                     href={`/shop/${artwork.id}`}
                     className="group flex flex-col bg-white rounded-[1.25rem] overflow-hidden shadow-[0px_2px_16px_0px_rgba(28,27,24,0.06)] hover:shadow-[0px_12px_32px_0px_rgba(28,27,24,0.13)] hover:-translate-y-1 transition duration-300"
                   >
-                    <div className="relative aspect-[3/4] w-full overflow-hidden">
-                      <div
-                        className="absolute inset-0"
-                        style={{ background: artwork.bg }}
-                      />
-                      <div
-                        className="absolute inset-0"
-                        style={{ background: artwork.shine }}
-                      />
+                    <div className="relative aspect-square w-full overflow-hidden bg-[#f0ead8]">
+                      <ArtworkImage artwork={artwork} />
                       {!artwork.available && (
                         <div className="absolute inset-0 bg-[rgba(254,252,248,0.55)] flex items-center justify-center">
                           <span className="font-['Inter'] text-xs font-semibold tracking-[0.1em] uppercase text-[rgba(28,27,24,0.6)] bg-white px-[0.875rem] py-[0.375rem] rounded-[3rem]">

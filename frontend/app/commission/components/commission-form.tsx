@@ -33,9 +33,20 @@ export default function CommissionForm() {
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
+      const body = [
+        `Name: ${form.name}`,
+        `Email: ${form.email}`,
+        form.size ? `Preferred size: ${form.size}` : "",
+        form.budget ? `Budget: ${form.budget}` : "",
+        "",
+        form.vision,
+      ]
+        .filter(Boolean)
+        .join("\n");
+      window.location.href = `mailto:hello@glamsfyt.com?subject=${encodeURIComponent("Commission request — Glamsfyt")}&body=${encodeURIComponent(body)}`;
       setSubmitted(true);
     },
-    []
+    [form]
   );
 
   if (submitted) {
@@ -45,11 +56,11 @@ export default function CommissionForm() {
           <span className="text-[#c4512a] text-[1.5rem]">✓</span>
         </div>
         <h3 className="font-['Instrument_Serif'] italic text-[1.75rem] text-[#1c1b18] mb-[0.75rem]">
-          Request received
+          Opening your email app
         </h3>
         <p className="font-['Inter'] text-[0.9375rem] font-light text-[rgba(28,27,24,0.6)] leading-[1.7] max-w-[22rem]">
-          I&apos;ll review your vision and be in touch within 2–3 days to
-          discuss details, timeline, and pricing.
+          Send the pre-filled commission request from your email client. I&apos;ll
+          reply within 1–2 business days.
         </p>
       </div>
     );

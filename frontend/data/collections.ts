@@ -8,6 +8,20 @@ export type Collection = {
 
 export const COLLECTIONS: Collection[] = [
   {
+    id: "anime",
+    title: "Anime",
+    tagline: "Icons, rendered by hand",
+    bg: "linear-gradient(145deg, #2a2a2a 0%, #6a6a6a 40%, #0a0a0a 100%)",
+    shine: "linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 55%)",
+  },
+  {
+    id: "sketch",
+    title: "Sketch",
+    tagline: "Line, shade, and character",
+    bg: "linear-gradient(145deg, #1a1a1a 0%, #8b1a1a 50%, #0a0a0a 100%)",
+    shine: "linear-gradient(45deg, rgba(255,255,255,0.08) 0%, transparent 55%)",
+  },
+  {
     id: "abstract",
     title: "Abstract",
     tagline: "Emotion without boundary",

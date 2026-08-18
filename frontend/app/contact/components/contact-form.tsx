@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useState, useCallback } from "react";
 
 type FormState = {
@@ -10,8 +11,19 @@ type FormState = {
 
 const INITIAL: FormState = { name: "", email: "", message: "" };
 
+function initialMessage(artwork: string | null) {
+  if (!artwork) return "";
+  return `I'm interested in "${artwork}".\n\n`;
+}
+
 export default function ContactForm() {
-  const [form, setForm] = useState<FormState>(INITIAL);
+  const searchParams = useSearchParams();
+  const artwork = searchParams.get("artwork");
+
+  const [form, setForm] = useState<FormState>(() => ({
+    ...INITIAL,
+    message: initialMessage(artwork),
+  }));
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = useCallback(
@@ -25,9 +37,14 @@ export default function ContactForm() {
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
+      const subject = artwork
+        ? `Inquiry: ${artwork}`
+        : "Glamsfyt inquiry";
+      const body = `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`;
+      window.location.href = `mailto:hello@glamsfyt.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       setSubmitted(true);
     },
-    []
+    [form, artwork]
   );
 
   if (submitted) {
@@ -37,10 +54,11 @@ export default function ContactForm() {
           <span className="text-[#c4512a] text-[1.5rem]">✓</span>
         </div>
         <h3 className="font-['Instrument_Serif'] italic text-[1.75rem] text-[#1c1b18] mb-[0.75rem]">
-          Message sent
+          Opening your email app
         </h3>
-        <p className="font-['Inter'] text-[0.9375rem] font-light text-[rgba(28,27,24,0.6)] leading-[1.7]">
-          I&apos;ll get back to you within 1–2 business days.
+        <p className="font-['Inter'] text-[0.9375rem] font-light text-[rgba(28,27,24,0.6)] leading-[1.7] max-w-[22rem]">
+          Send the pre-filled message from your email client. I&apos;ll reply
+          within 1–2 business days.
         </p>
       </div>
     );
@@ -54,8 +72,16 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-[1.25rem]">
+      {artwork && (
+        <p className="font-['Inter'] text-sm text-[rgba(28,27,24,0.55)] bg-[rgba(28,27,24,0.04)] border border-[rgba(28,27,24,0.08)] rounded-[0.75rem] px-[1rem] py-[0.75rem]">
+          Inquiring about:{" "}
+          <span className="font-medium text-[#1c1b18]">{artwork}</span>
+        </p>
+      )}
       <div>
-        <label htmlFor="name" className={labelClass}>Name</label>
+        <label htmlFor="name" className={labelClass}>
+          Name
+        </label>
         <input
           id="name"
           name="name"
@@ -68,7 +94,9 @@ export default function ContactForm() {
         />
       </div>
       <div>
-        <label htmlFor="email" className={labelClass}>Email</label>
+        <label htmlFor="email" className={labelClass}>
+          Email
+        </label>
         <input
           id="email"
           name="email"
@@ -81,7 +109,9 @@ export default function ContactForm() {
         />
       </div>
       <div>
-        <label htmlFor="message" className={labelClass}>Message</label>
+        <label htmlFor="message" className={labelClass}>
+          Message
+        </label>
         <textarea
           id="message"
           name="message"
